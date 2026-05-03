@@ -4,8 +4,6 @@ from datetime import datetime
 import time
 from typography import DIALOG_FONT_SIZE, UI_FONT_FAMILY
 
-
-
 boardControls = SerialController()
 DIALOG_FONT = (UI_FONT_FAMILY, DIALOG_FONT_SIZE)
 
@@ -40,8 +38,6 @@ def counterFunction(counter,checkState):
 def modifyState(checkState):
     for value in checkState.buttons:
         value.configure(state="normal")
-
-
 
 #Board Ops
 
