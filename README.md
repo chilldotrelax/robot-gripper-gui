@@ -77,9 +77,3 @@ Then use the interface in this order:
 ├── requirements.txt        # Python package dependencies
 └── README.md
 ```
-
-## Development Notes
-
-This project is still a work in progress. The current implementation expects the
-user to type the serial port and baud rate manually, and it does not yet include
-automatic port discovery, packaged releases, or automated tests.
