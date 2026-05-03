@@ -57,7 +57,6 @@ def openGripper(textbox):
         boardControls.send_command("o")
         write_to_box(textbox, f"{now} Opening Gripper, please wait!")
 
-
 def closeGripper(textbox):
     if not boardControls.is_connected():
         write_to_box(textbox, f"{now} Not connected, please connect to a board first!")
