@@ -1,7 +1,6 @@
 import serial
 import time
 
-
 class SerialController:
     def __init__(self):
         self.arduino = None

@@ -57,7 +57,7 @@ class App(customtkinter.CTk):
 
         self.selectionButton.grid(row = 4, column = 0, padx = 20, pady = 20)
 
-        self.writeBox = customtkinter.CTkTextbox(self, width=600, height=200, corner_radius=3)
+        self.writeBox = customtkinter.CTkTextbox(self, width=600, height=200, corner_radius=3,font=customtkinter.CTkFont(size=14,family="Courier New"))
         self.writeBox.grid(row=6, column=0, padx=20, pady=20)
 
 
