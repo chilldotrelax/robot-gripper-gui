@@ -80,6 +80,7 @@ def connectBoard(textbox,reportStatusBox,enableButtons):
     write_to_box(textbox,reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Successfully Connected!")
     for value in enableButtons.buttons:
         value.configure(state="normal")
+
 def disconnectBoard(textbox,reportStatusBox):
     boardControls.disconnect()
     time.sleep(1)
