@@ -20,6 +20,7 @@ from typography import (
 APP_ICON_PATH = Path(__file__).resolve().parent / "assets" / "app_icon.png"
 
 BUTTON_FONT = (UI_FONT_FAMILY, BUTTON_FONT_SIZE, "bold")
+STOP_BUTTON_FONT = (UI_FONT_FAMILY, BUTTON_FONT_SIZE, "bold")
 TITLE_FONT = (UI_FONT_FAMILY, TITLE_FONT_SIZE, "bold")
 LOG_FONT = (MONO_FONT_FAMILY, LOG_FONT_SIZE)
 STATUS_FONT = (UI_FONT_FAMILY, STATUS_FONT_SIZE)
@@ -71,7 +72,13 @@ class App(customtkinter.CTk):
 
         self.button_frame1 = buttonFrame(self, values= ["Open", "Close", "Stop"], commandDictionary= {"0" : lambda: openGripper(self.writeBox,self.boxes), "1" : lambda: closeGripper(self.writeBox,self.boxes), "2" : lambda: stopGripper(self.writeBox,self.boxes)},rowValue = 1,title = "Gripper Controls")
         self.button_frame1.grid(row= 0 , column =0, padx = 20, pady = 20)
-        self.button_frame1.buttons[2].configure(fg_color="red", hover_color="red", text_color="white")
+        self.button_frame1.buttons[2].configure(
+            fg_color="#C62828",
+            hover_color="#A61B1B",
+            text_color="#FFFFFF",
+            text_color_disabled="#F7F7F7",
+            font=STOP_BUTTON_FONT,
+        )
 
         self.button_frame2= buttonFrame(self, values = ["Connect", "Disconnect", "Check Connection"], commandDictionary ={"0" : lambda: connectBoard(self.writeBox,self.boxes), "1" : lambda: disconnectBoard(self.writeBox,self.boxes), "2" : lambda: checkConnection(self.writeBox,self.boxes)}, rowValue = 3, title = "Board Controls")
         self.button_frame2.grid(row = 2, column = 0, padx = 20, pady = 20)
