@@ -41,7 +41,7 @@ def getBaudRate(textbox,reportStatusBox):
         time.sleep(1)
         write_to_box(textbox, reportStatusBox, f"[{datetime.now().strftime('%H:%M:%S')}] Baud Rate set to {rate}.")
     else:
-        time.sleep(1)
+        time.sleep(0.2)
         write_to_box(textbox,reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Invalid Entry, please try again.")
 
 def getPort(textbox,reportStatusBox):
