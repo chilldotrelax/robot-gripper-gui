@@ -12,6 +12,7 @@ DIALOG_FONT = (UI_FONT_FAMILY, DIALOG_FONT_SIZE)
 #Global Variables
 rate = 0
 port = ""
+counter = 0
 
 def reportStatus():
     if not boardControls.is_connected():
@@ -28,29 +29,48 @@ def write_to_box(textbox, reportStatusBox, inputString):
     reportStatusBox.delete("1.0", "end")
     reportStatusBox.insert("end", "Status: " + reportStatus() + " | 2026")
     reportStatusBox.configure(state="disabled")
+internalCounter = 0
+def counterFunction(counter,checkState):
+    if counter:
+        global internalCounter
+        internalCounter += 1
     
+    if internalCounter >= 2: modifyState(checkState)
+
+def modifyState(checkState):
+    for value in checkState.buttons:
+        value.configure(state="normal")
+
+
 
 #Board Ops
 
-def getBaudRate(textbox,reportStatusBox):
+def getBaudRate(textbox,reportStatusBox,checkState):
     getRate = customtkinter.CTkInputDialog(text="Type in your preferred rate", title="Baud Rate", font=DIALOG_FONT)
     input_value = getRate.get_input()
     if input_value is not None and input_value.isdigit() == True:
+        counter = 0
         global rate 
         rate = int(input_value)
         time.sleep(1)
+        counter += 1
+        counterFunction(counter,checkState)
         write_to_box(textbox, reportStatusBox, f"[{datetime.now().strftime('%H:%M:%S')}] Baud Rate set to {rate}.")
+
     else:
         time.sleep(0.2)
         write_to_box(textbox,reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Invalid Entry, please try again.")
 
-def getPort(textbox,reportStatusBox):
+def getPort(textbox,reportStatusBox,checkState):
     getRate = customtkinter.CTkInputDialog(text="Type in your preferred port", title="Port Selection", font=DIALOG_FONT)
     input_value = getRate.get_input()
     if input_value is not None:
+        counter = 0
         global port 
         port = input_value
         time.sleep(1)
+        counter += 1
+        counterFunction(counter,checkState)
         write_to_box(textbox,reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Port set to {port}.")
 
 def connectBoard(textbox,reportStatusBox):
@@ -73,6 +93,7 @@ def checkConnection(textbox,reportStatusBox):
 def openGripper(textbox,reportStatusBox):
     if not boardControls.is_connected():
         time.sleep(1)
+
         write_to_box(textbox, reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Not connected, please connect to a board first!")
     else:
         boardControls.send_command("o")

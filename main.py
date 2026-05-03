@@ -54,7 +54,7 @@ class buttonFrame(customtkinter.CTkFrame):
 
         for i, value in enumerate(self.values):
             x = self.commandDictionary.get(str(i))
-            button = customtkinter.CTkButton(self, text=value, command=x, font=BUTTON_FONT)
+            button = customtkinter.CTkButton(self, text=value, command=x, font=BUTTON_FONT, state="disabled")
             button.grid(row = rowValue, column = i+1, padx=20,pady= (20,0), sticky = "w")
             self.buttons.append(button)
 
@@ -69,13 +69,14 @@ class App(customtkinter.CTk):
         self._set_app_icon()
         self.geometry("633x760")
 
-        self.button_frame = buttonFrame(self, values= ["Open", "Close", "Stop"], commandDictionary= {"0" : lambda: openGripper(self.writeBox,self.boxes), "1" : lambda: closeGripper(self.writeBox,self.boxes), "2" : lambda: stopGripper(self.writeBox,self.boxes)},rowValue = 1,title = "Gripper Controls")
-        self.button_frame.grid(row= 0 , column =0, padx = 20, pady = 20)
+        self.button_frame1 = buttonFrame(self, values= ["Open", "Close", "Stop"], commandDictionary= {"0" : lambda: openGripper(self.writeBox,self.boxes), "1" : lambda: closeGripper(self.writeBox,self.boxes), "2" : lambda: stopGripper(self.writeBox,self.boxes)},rowValue = 1,title = "Gripper Controls")
+        self.button_frame1.grid(row= 0 , column =0, padx = 20, pady = 20)
+        self.button_frame1.buttons[2].configure(fg_color="red", hover_color="red", text_color="white")
 
-        self.button_frame = buttonFrame(self, values = ["Connect", "Disconnect", "Check Connection"], commandDictionary ={"0" : lambda: connectBoard(self.writeBox,self.boxes), "1" : lambda: disconnectBoard(self.writeBox,self.boxes), "2" : lambda: checkConnection(self.writeBox,self.boxes)}, rowValue = 3, title = "Board Controls")
-        self.button_frame.grid(row = 2, column = 0, padx = 20, pady = 20)
+        self.button_frame2= buttonFrame(self, values = ["Connect", "Disconnect", "Check Connection"], commandDictionary ={"0" : lambda: connectBoard(self.writeBox,self.boxes), "1" : lambda: disconnectBoard(self.writeBox,self.boxes), "2" : lambda: checkConnection(self.writeBox,self.boxes)}, rowValue = 3, title = "Board Controls")
+        self.button_frame2.grid(row = 2, column = 0, padx = 20, pady = 20)
 
-        self.selectionButton = selectionButtons(self, values = ["Select Baud Rate", "Select Port"], commandDictionary ={"0" : lambda: getBaudRate(self.writeBox,self.boxes), "1" : lambda: getPort(self.writeBox,self.boxes)}, rowValue = 5)
+        self.selectionButton = selectionButtons(self, values = ["Select Baud Rate", "Select Port"], commandDictionary ={"0" : lambda: getBaudRate(self.writeBox,self.boxes,self.button_frame2), "1" : lambda: getPort(self.writeBox,self.boxes,self.button_frame2)}, rowValue = 5)
 
         self.selectionButton.grid(row = 4, column = 0, padx = 20, pady = 20)
 
