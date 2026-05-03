@@ -2,10 +2,12 @@ import customtkinter
 from serial_controller import SerialController
 from datetime import datetime
 import time
+from typography import DIALOG_FONT_SIZE, UI_FONT_FAMILY
 
 
 
 boardControls = SerialController()
+DIALOG_FONT = (UI_FONT_FAMILY, DIALOG_FONT_SIZE)
 
 #Global Variables
 rate = 0
@@ -31,7 +33,7 @@ def write_to_box(textbox, reportStatusBox, inputString):
 #Board Ops
 
 def getBaudRate(textbox,reportStatusBox):
-    getRate = customtkinter.CTkInputDialog(text="Type in your preferred rate", title = "Baud Rate")
+    getRate = customtkinter.CTkInputDialog(text="Type in your preferred rate", title="Baud Rate", font=DIALOG_FONT)
     input_value = getRate.get_input()
     if input_value is not None and input_value.isdigit() == True:
         global rate 
@@ -43,7 +45,7 @@ def getBaudRate(textbox,reportStatusBox):
         write_to_box(textbox,reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Invalid Entry, please try again.")
 
 def getPort(textbox,reportStatusBox):
-    getRate = customtkinter.CTkInputDialog(text="Type in your preferred port", title = "Port Selection")
+    getRate = customtkinter.CTkInputDialog(text="Type in your preferred port", title="Port Selection", font=DIALOG_FONT)
     input_value = getRate.get_input()
     if input_value is not None:
         global port 

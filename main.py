@@ -7,9 +7,22 @@ from pathlib import Path
 from serial_controller import SerialController
 from functions import openGripper, closeGripper, stopGripper, connectBoard, disconnectBoard, checkConnection, getBaudRate, getPort,reportStatus
 from datetime import datetime 
+from typography import (
+    BUTTON_FONT_SIZE,
+    LOG_FONT_SIZE,
+    MONO_FONT_FAMILY,
+    STATUS_FONT_SIZE,
+    TITLE_FONT_SIZE,
+    UI_FONT_FAMILY,
+)
 
 
 APP_ICON_PATH = Path(__file__).resolve().parent / "assets" / "app_icon.png"
+
+BUTTON_FONT = (UI_FONT_FAMILY, BUTTON_FONT_SIZE, "bold")
+TITLE_FONT = (UI_FONT_FAMILY, TITLE_FONT_SIZE, "bold")
+LOG_FONT = (MONO_FONT_FAMILY, LOG_FONT_SIZE)
+STATUS_FONT = (UI_FONT_FAMILY, STATUS_FONT_SIZE)
 
 
 #Selection Buttons (Child Class)
@@ -21,7 +34,7 @@ class selectionButtons(customtkinter.CTkFrame):
 
         for i, value in enumerate(self.values):
             y = self.commandDictionary.get(str(i))
-            button = customtkinter.CTkButton(self, text = value, command = y,font=customtkinter.CTkFont(size=14,family="Courier New"))
+            button = customtkinter.CTkButton(self, text=value, command=y, font=BUTTON_FONT)
             button.grid(row = rowValue, column = i+1, padx = 20, pady = (20,0), sticky = "w")
 
 
@@ -36,12 +49,12 @@ class buttonFrame(customtkinter.CTkFrame):
         self.row = rowValue
     
 
-        self.title = customtkinter.CTkLabel(self, text=self.title, fg_color="gray30", corner_radius = 6)
+        self.title = customtkinter.CTkLabel(self, text=self.title, fg_color="gray30", corner_radius=6, font=TITLE_FONT)
         self.title.grid(row = 0, column = 2, padx=10,pady=(10,0),sticky="ew")
 
         for i, value in enumerate(self.values):
             x = self.commandDictionary.get(str(i))
-            button = customtkinter.CTkButton(self, text = value, command = x,font=customtkinter.CTkFont(size=14,family="Courier New"))
+            button = customtkinter.CTkButton(self, text=value, command=x, font=BUTTON_FONT)
             button.grid(row = rowValue, column = i+1, padx=20,pady= (20,0), sticky = "w")
             self.buttons.append(button)
 
@@ -54,7 +67,7 @@ class App(customtkinter.CTk):
 
         self.title("Gripper Control Panel")
         self._set_app_icon()
-        self.geometry("700x800")
+        self.geometry("633x760")
 
         self.button_frame = buttonFrame(self, values= ["Open", "Close", "Stop"], commandDictionary= {"0" : lambda: openGripper(self.writeBox,self.boxes), "1" : lambda: closeGripper(self.writeBox,self.boxes), "2" : lambda: stopGripper(self.writeBox,self.boxes)},rowValue = 1,title = "Gripper Controls")
         self.button_frame.grid(row= 0 , column =0, padx = 20, pady = 20)
@@ -66,11 +79,11 @@ class App(customtkinter.CTk):
 
         self.selectionButton.grid(row = 4, column = 0, padx = 20, pady = 20)
 
-        self.writeBox = customtkinter.CTkTextbox(self, width=600, height=200, corner_radius=3,font=customtkinter.CTkFont(size=14,family="Courier New"))
+        self.writeBox = customtkinter.CTkTextbox(self, width=600, height=200, corner_radius=3, font=LOG_FONT)
         self.writeBox.grid(row=6, column=0, padx=20, pady=20)
         self.writeBox.configure(state="disabled")
 
-        self.boxes = customtkinter.CTkTextbox(self, width=600, height=100, corner_radius=0,font=customtkinter.CTkFont(size=14,family="Courier New"),fg_color="transparent")
+        self.boxes = customtkinter.CTkTextbox(self, width=600, height=100, corner_radius=0, font=STATUS_FONT, fg_color="transparent")
         self.boxes.grid(row=9, column=0, padx=20, pady=20)
         self.boxes.configure(state="normal")
         self.boxes.insert("end", "Status: " + reportStatus() + " | 2026")
