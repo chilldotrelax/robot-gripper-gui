@@ -1,9 +1,3 @@
-# Robot Gripper GUI
-
-A small desktop control panel for an Arduino-driven robot gripper. The app uses
-CustomTkinter for the interface and PySerial to send simple single-character
-commands over a serial connection.
-
 ## Current Features
 
 - Open, close, and stop gripper controls
@@ -22,14 +16,13 @@ The GUI sends these commands to the connected board:
 | Close | `c` |
 | Stop | `s` |
 
-Your Arduino or microcontroller sketch should listen for those characters and
+Arduino or microcontroller sketch should listen for those characters and
 map them to the matching gripper behavior.
 
 ## Requirements
 
 - Python 3.9 or newer recommended
-- A serial-capable Arduino or compatible microcontroller
-- A USB or serial connection to the board
+- Arduino
 
 Python packages are listed in [requirements.txt](requirements.txt).
 
