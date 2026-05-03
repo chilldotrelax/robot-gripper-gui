@@ -80,7 +80,7 @@ class App(customtkinter.CTk):
             font=STOP_BUTTON_FONT,
         )
 
-        self.button_frame2= buttonFrame(self, values = ["Connect", "Disconnect", "Check Connection"], commandDictionary ={"0" : lambda: connectBoard(self.writeBox,self.boxes), "1" : lambda: disconnectBoard(self.writeBox,self.boxes), "2" : lambda: checkConnection(self.writeBox,self.boxes)}, rowValue = 3, title = "Board Controls")
+        self.button_frame2= buttonFrame(self, values = ["Connect", "Disconnect", "Check Connection"], commandDictionary ={"0" : lambda: connectBoard(self.writeBox,self.boxes,self.button_frame1), "1" : lambda: disconnectBoard(self.writeBox,self.boxes), "2" : lambda: checkConnection(self.writeBox,self.boxes)}, rowValue = 3, title = "Board Controls")
         self.button_frame2.grid(row = 2, column = 0, padx = 20, pady = 20)
 
         self.selectionButton = selectionButtons(self, values = ["Select Baud Rate", "Select Port"], commandDictionary ={"0" : lambda: getBaudRate(self.writeBox,self.boxes,self.button_frame2), "1" : lambda: getPort(self.writeBox,self.boxes,self.button_frame2)}, rowValue = 5)
@@ -94,9 +94,16 @@ class App(customtkinter.CTk):
         self.boxes = customtkinter.CTkTextbox(self, width=600, height=100, corner_radius=0, font=STATUS_FONT, fg_color="transparent")
         self.boxes.grid(row=9, column=0, padx=20, pady=20)
         self.boxes.configure(state="normal")
-        self.boxes.insert("end", "Status: " + reportStatus() + " | © 2026 (MIT LICENSE)")
+        self.boxes.tag_config("center", justify="center")
+        self.boxes.insert("end", "Status: " + reportStatus() + "| Baud Rate: Not Set | Port: Not Set","center")
         self.boxes.configure(state="disabled")
-        
+
+        self.boxes2 = customtkinter.CTkTextbox(self, width=600, height=100, corner_radius=0, font=STATUS_FONT, fg_color="transparent")
+        self.boxes2.grid(row=14, column=0, padx=20, pady = 20, sticky = "s")
+        self.boxes2.configure(state="normal")
+        self.boxes2.tag_config("center", justify="center")
+        self.boxes2.insert("end", "Alpha Build 0.1.0","center")
+        self.boxes2.configure(state="disabled")
     def _set_app_icon(self):
         if not APP_ICON_PATH.exists():
             return
@@ -110,3 +117,4 @@ app = App()
 
 
 app.mainloop()
+
