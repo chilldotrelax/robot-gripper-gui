@@ -1,7 +1,7 @@
 import customtkinter
 from serial_controller import SerialController
 from datetime import datetime
-
+import time
 
 
 
@@ -11,64 +11,86 @@ boardControls = SerialController()
 rate = 0
 port = ""
 
+def reportStatus():
+    if not boardControls.is_connected():
+        return "Not Connected"
+    else:
+        return "Connected"
 
-def write_to_box(textbox, inputString):
+def write_to_box(textbox, reportStatusBox, inputString):
     textbox.configure(state="normal")
     textbox.insert("end", inputString + "\n")
     textbox.configure(state="disabled")
 
+    reportStatusBox.configure(state="normal")
+    reportStatusBox.delete("1.0", "end")
+    reportStatusBox.insert("end", "Status: " + reportStatus() + " | 2026")
+    reportStatusBox.configure(state="disabled")
+    
+
 #Board Ops
 
-def getBaudRate(textbox):
+def getBaudRate(textbox,reportStatusBox):
     getRate = customtkinter.CTkInputDialog(text="Type in your preferred rate", title = "Baud Rate")
     input_value = getRate.get_input()
     if input_value is not None and input_value.isdigit() == True:
         global rate 
         rate = int(input_value)
-        write_to_box(textbox, f"[{datetime.now().strftime('%H:%M:%S')}] Baud Rate set to {rate}.")
+        time.sleep(1)
+        write_to_box(textbox, reportStatusBox, f"[{datetime.now().strftime('%H:%M:%S')}] Baud Rate set to {rate}.")
     else:
-        write_to_box(textbox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Invalid Entry, please try again.")
+        time.sleep(1)
+        write_to_box(textbox,reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Invalid Entry, please try again.")
 
-def getPort(textbox):
+def getPort(textbox,reportStatusBox):
     getRate = customtkinter.CTkInputDialog(text="Type in your preferred port", title = "Port Selection")
     input_value = getRate.get_input()
     if input_value is not None:
         global port 
         port = input_value
-        write_to_box(textbox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Port set to {port}.")
+        time.sleep(1)
+        write_to_box(textbox,reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Port set to {port}.")
 
-def connectBoard(textbox):
-    boardControls.connect(port, rate)
-    write_to_box(textbox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Successfully Connected!")
+def connectBoard(textbox,reportStatusBox):
+    boardControls.connect(port, rate)  
+    time.sleep(1)
+    write_to_box(textbox,reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Successfully Connected!")
 
-def disconnectBoard(textbox):
+def disconnectBoard(textbox,reportStatusBox):
     boardControls.disconnect()
-    write_to_box(textbox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Successfully Disconnected!")
+    time.sleep(1)
+    write_to_box(textbox,reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Successfully Disconnected!")
 
-def checkConnection(textbox):
+def checkConnection(textbox,reportStatusBox):
     if not boardControls.is_connected():
-        write_to_box(textbox, "Not connected")
+        write_to_box(textbox,reportStatusBox, "Not connected")
     else:
-        write_to_box(textbox, "Connected!")
+        write_to_box(textbox,reportStatusBox, "Connected!")
 
 #Motor Operations
-def openGripper(textbox):
+def openGripper(textbox,reportStatusBox):
     if not boardControls.is_connected():
-        write_to_box(textbox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Not connected, please connect to a board first!")
+        time.sleep(1)
+        write_to_box(textbox, reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Not connected, please connect to a board first!")
     else:
         boardControls.send_command("o")
-        write_to_box(textbox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Opening Gripper, please wait!")
+        time.sleep(1)
+        write_to_box(textbox, reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Opening Gripper, please wait!")
 
-def closeGripper(textbox):
+def closeGripper(textbox,reportStatusBox):
     if not boardControls.is_connected():
-        write_to_box(textbox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Not connected, please connect to a board first!")
+        time.sleep(1)
+        write_to_box(textbox,reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Not connected, please connect to a board first!")
     else:
         boardControls.send_command("c")
-        write_to_box(textbox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Closing Gripper, please wait!")
+        time.sleep(1)
+        write_to_box(textbox, reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Closing Gripper, please wait!")
 
-def stopGripper(textbox):
+def stopGripper(textbox,reportStatusBox):
     if not boardControls.is_connected():
-        write_to_box(textbox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Not connected, please connect to a board first!")
+        time.sleep(1)
+        write_to_box(textbox, reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Not connected, please connect to a board first!")
     else:
         boardControls.send_command("s")
-        write_to_box(textbox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Stopping Gripper, please wait!")
+        time.sleep(1)
+        write_to_box(textbox, reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Stopping Gripper, please wait!")
