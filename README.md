@@ -66,6 +66,8 @@ Then use the interface in this order:
 ├── main.py                 # CustomTkinter app layout and button wiring
 ├── functions.py            # GUI command handlers and log helpers
 ├── serial_controller.py    # PySerial connection wrapper
+├── assets/
+│   └── app_icon.png        # Window icon asset
 ├── requirements.txt        # Python package dependencies
 └── README.md
 ```

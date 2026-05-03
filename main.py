@@ -2,10 +2,14 @@
 #Andy Huang --GUI Implementation & Arduino Code
 
 import customtkinter,time
+import tkinter
+from pathlib import Path
 from serial_controller import SerialController
 from functions import openGripper, closeGripper, stopGripper, connectBoard, disconnectBoard, checkConnection, getBaudRate, getPort,reportStatus
 from datetime import datetime 
 
+
+APP_ICON_PATH = Path(__file__).resolve().parent / "assets" / "app_icon.png"
 
 
 #Selection Buttons (Child Class)
@@ -49,6 +53,7 @@ class App(customtkinter.CTk):
         super().__init__()
 
         self.title("Gripper Control Panel")
+        self._set_app_icon()
         self.geometry("700x800")
 
         self.button_frame = buttonFrame(self, values= ["Open", "Close", "Stop"], commandDictionary= {"0" : lambda: openGripper(self.writeBox,self.boxes), "1" : lambda: closeGripper(self.writeBox,self.boxes), "2" : lambda: stopGripper(self.writeBox,self.boxes)},rowValue = 1,title = "Gripper Controls")
@@ -71,6 +76,13 @@ class App(customtkinter.CTk):
         self.boxes.insert("end", "Status: " + reportStatus() + " | 2026")
         self.boxes.configure(state="disabled")
         
+    def _set_app_icon(self):
+        if not APP_ICON_PATH.exists():
+            return
+
+        self._app_icon = tkinter.PhotoImage(file=str(APP_ICON_PATH))
+        self.iconphoto(True, self._app_icon)
+
 
 
 app = App()
