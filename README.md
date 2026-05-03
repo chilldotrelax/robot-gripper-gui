@@ -4,7 +4,6 @@
 - Manual serial port selection
 - Manual baud rate selection
 - Connect, disconnect, and connection status controls
-- Text log area for user feedback
 
 ## Command Protocol
 
