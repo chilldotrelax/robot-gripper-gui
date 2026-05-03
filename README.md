@@ -59,6 +59,11 @@ Then use the interface in this order:
 4. Use **Open**, **Close**, or **Stop** to control the gripper.
 5. Click **Disconnect** before unplugging the board or closing the app.
 
+## License
+
+This sophomore project is licensed under the MIT License. See [LICENSE](LICENSE)
+for details.
+
 ## Project Structure
 
 ```text
