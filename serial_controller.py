@@ -14,7 +14,6 @@ class SerialController:
     def disconnect(self):
         if self.arduino and self.arduino.is_open:
             self.arduino.close()
-        print("Board has been disconnected.")
 
     def is_connected(self):
         return self.arduino is not None and self.arduino.is_open #True
@@ -30,3 +29,4 @@ class SerialController:
             return self.arduino.readline().decode(errors="ignore").strip()
 
         return None
+

@@ -1,3 +1,6 @@
+#Credits
+#Andy Huang --GUI Implementation & Arduino Code
+
 import customtkinter 
 from serial_controller import SerialController
 from functions import openGripper, closeGripper, stopGripper, connectBoard, disconnectBoard, checkConnection, getBaudRate, getPort
@@ -35,6 +38,7 @@ class buttonFrame(customtkinter.CTkFrame):
             button.grid(row = rowValue, column = i+1, padx=20,pady= (20,0), sticky = "w")
             self.buttons.append(button)
 
+
 #main
 class App(customtkinter.CTk):
     def __init__(self):
@@ -43,19 +47,22 @@ class App(customtkinter.CTk):
         self.title("Gripper Control Panel")
         self.geometry("600x600")
 
-        self.button_frame = buttonFrame(self, values= ["Open", "Close", "Stop"], commandDictionary= {"0" : openGripper, "1" : closeGripper, "2" : stopGripper},rowValue = 1,title = "Gripper Controls")
+        self.button_frame = buttonFrame(self, values= ["Open", "Close", "Stop"], commandDictionary= {"0" : lambda: openGripper(self.writeBox), "1" : lambda: closeGripper(self.writeBox), "2" : lambda: stopGripper(self.writeBox)},rowValue = 1,title = "Gripper Controls")
         self.button_frame.grid(row= 0 , column =0, padx = 20, pady = 20)
 
-        self.button_frame = buttonFrame(self, values = ["Connect", "Disconnect", "Check Connection"], commandDictionary ={"0" : connectBoard, "1" : disconnectBoard, "2" : checkConnection}, rowValue = 3, title = "Board Controls")
+        self.button_frame = buttonFrame(self, values = ["Connect", "Disconnect", "Check Connection"], commandDictionary ={"0" : lambda: connectBoard(self.writeBox), "1" : lambda: disconnectBoard(self.writeBox), "2" : checkConnection}, rowValue = 3, title = "Board Controls")
         self.button_frame.grid(row = 2, column = 0, padx = 20, pady = 20)
 
-        self.selectionButton = selectionButtons(self, values = ["Select Baud Rate", "Select Port"], commandDictionary ={"0" : getBaudRate, "1" : getPort}, rowValue = 5)
+        self.selectionButton = selectionButtons(self, values = ["Select Baud Rate", "Select Port"], commandDictionary ={"0" : lambda: getBaudRate(self.writeBox), "1" : lambda: getPort(self.writeBox)}, rowValue = 5)
 
         self.selectionButton.grid(row = 4, column = 0, padx = 20, pady = 20)
 
+        self.writeBox = customtkinter.CTkTextbox(self, width=600, height=200, corner_radius=3)
+        self.writeBox.grid(row=6, column=0, padx=20, pady=20)
 
 
 
 app = App()
+
 
 app.mainloop()
