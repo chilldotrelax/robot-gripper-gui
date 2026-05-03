@@ -86,7 +86,7 @@ class App(customtkinter.CTk):
         self.boxes = customtkinter.CTkTextbox(self, width=600, height=100, corner_radius=0, font=STATUS_FONT, fg_color="transparent")
         self.boxes.grid(row=9, column=0, padx=20, pady=20)
         self.boxes.configure(state="normal")
-        self.boxes.insert("end", "Status: " + reportStatus() + " | 2026")
+        self.boxes.insert("end", "Status: " + reportStatus() + " | © 2026 (MIT LICENSE)")
         self.boxes.configure(state="disabled")
         
     def _set_app_icon(self):
