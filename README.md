@@ -1,50 +1,85 @@
 # Robot Gripper GUI
 
-This project provides a graphical user interface (GUI) for controlling a robot gripper. It allows users to interact with the gripper through a visual interface, enabling operations such as opening and closing the gripper, monitoring its status, and integrating with robotic systems.
+A small desktop control panel for an Arduino-driven robot gripper. The app uses
+CustomTkinter for the interface and PySerial to send simple single-character
+commands over a serial connection.
 
-**Disclaimer:** This project is still a work in progress (WIP) and is incomplete.
+## Current Features
 
-## Features
+- Open, close, and stop gripper controls
+- Manual serial port selection
+- Manual baud rate selection
+- Connect, disconnect, and connection status controls
+- Text log area for user feedback
 
-- Intuitive GUI for gripper control
-- Real-time status updates
-- Compatibility with various robot platforms
-- Easy-to-use controls for beginners and experts
+## Command Protocol
 
-## Installation
+The GUI sends these commands to the connected board:
 
-1. Ensure you have Python installed (version 3.6 or higher).
-2. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/robot-gripper-gui.git
-   ```
-3. Navigate to the project directory:
-   ```
-   cd robot-gripper-gui
-   ```
-4. Install the required dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
+| GUI action | Serial command |
+| --- | --- |
+| Open | `o` |
+| Close | `c` |
+| Stop | `s` |
 
-## Usage
-
-1. Run the application:
-   ```
-   python main.py
-   ```
-2. Connect to your robot gripper via the GUI.
-3. Use the buttons or sliders to control the gripper's actions.
+Your Arduino or microcontroller sketch should listen for those characters and
+map them to the matching gripper behavior.
 
 ## Requirements
 
-- Python 3.6+
-- Dependencies listed in `requirements.txt` (e.g., Tkinter, PySerial for serial communication)
+- Python 3.9 or newer recommended
+- A serial-capable Arduino or compatible microcontroller
+- A USB or serial connection to the board
 
-## Contributing
+Python packages are listed in [requirements.txt](requirements.txt).
 
-Contributions are welcome! Please fork the repository and submit a pull request.
+## Setup
 
-## License
+Clone the repository and install the Python dependencies:
 
-This project is licensed under the MIT License.
+```bash
+git clone https://github.com/chilldotrelax/robot-gripper-gui.git
+cd robot-gripper-gui
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+```
+
+On Windows, activate the virtual environment with:
+
+```powershell
+.venv\Scripts\activate
+```
+
+## Running the App
+
+Start the GUI with:
+
+```bash
+python main.py
+```
+
+Then use the interface in this order:
+
+1. Select the baud rate used by your board, such as `9600`.
+2. Select the serial port, such as `/dev/cu.usbmodem1101`, `/dev/ttyUSB0`, or `COM3`.
+3. Click **Connect**.
+4. Use **Open**, **Close**, or **Stop** to control the gripper.
+5. Click **Disconnect** before unplugging the board or closing the app.
+
+## Project Structure
+
+```text
+.
+├── main.py                 # CustomTkinter app layout and button wiring
+├── functions.py            # GUI command handlers and log helpers
+├── serial_controller.py    # PySerial connection wrapper
+├── requirements.txt        # Python package dependencies
+└── README.md
+```
+
+## Development Notes
+
+This project is still a work in progress. The current implementation expects the
+user to type the serial port and baud rate manually, and it does not yet include
+automatic port discovery, packaged releases, or automated tests.
