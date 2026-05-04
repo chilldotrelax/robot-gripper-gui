@@ -35,7 +35,6 @@ List Of Commands. Case-sensitive -- Type only in uppercase.
 | `STOP` | Stops the gripper |
 | `HELP` | Prints command guidance |
 
-For normal use, prefer the GUI buttons until the command box is finished.
 
 ## Requirements
 
