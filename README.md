@@ -61,7 +61,7 @@ Then use the interface in this order:
 
 ## License
 
-This sophomore project is licensed under the MIT License. See [LICENSE](LICENSE)
+Licensed under the MIT License. See [LICENSE](LICENSE)
 for details.
 
 ## Project Structure
