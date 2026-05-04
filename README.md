@@ -1,15 +1,15 @@
 # Gripper Control Panel
 
-Robot gripper desktop GUI built with CustomTkinter and PySerial.
+Helps control the gripper. 
 
-## Current Features
+## Current Actions Supported
 
 - Open, close, and stop gripper controls
 - Manual serial port selection
-- Manual baud rate selection
+- Manual baud rate selection (type only 9600 BPS! for correct function.)
 - Connect, disconnect, and connection status controls
 - Output log and connection status display
-- WIP command entry box for typed commands
+- Command Box (Incomplete, do not use or risk crashing!)
 
 ## Command Protocol
 
@@ -21,8 +21,7 @@ The GUI sends these commands to the connected board:
 | Close | `c` |
 | Stop | `s` |
 
-Arduino or microcontroller sketch should listen for those characters and
-map them to the matching gripper behavior.
+The arduino opens a serial connection and listens for these characters. 
 
 ## Command Box
 
@@ -79,7 +78,7 @@ Then use the interface in this order:
 
 ## Portable Zip Build
 
-Some releases are distributed as a portable zip file instead of source code.
+It is possible that some releases are distributed as a portable zip file instead of source code.
 To run the portable build:
 
 1. Download and unzip the release folder.
