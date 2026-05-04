@@ -98,6 +98,7 @@ class App(customtkinter.CTk):
         #Output Log Box Instance
         self.writeBox = customtkinter.CTkTextbox(self, width=600, height=200, corner_radius=3, font=LOG_FONT)
         self.writeBox.grid(row=6, column=0, padx=20, pady=20)
+        self.writeBox.insert("end",f"[{datetime.now().strftime("%H:%M:%S")}] Select baud rate and port to enable board control.")
         self.writeBox.configure(state="disabled")
 
 
