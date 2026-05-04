@@ -27,7 +27,7 @@ The arduino opens a serial connection and listens for these characters.
 
 List Of Commands. Case-sensitive -- Type only in uppercase.
 
-| Typed command | Action |
+| Command | Action |
 | --- | --- |
 | `OPEN` | Opens the gripper |
 | `CLOSE` | Closes the gripper |
