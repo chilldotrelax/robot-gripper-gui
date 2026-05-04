@@ -26,15 +26,14 @@ map them to the matching gripper behavior.
 
 ## Command Box
 
-The command entry box is currently work in progress. The planned command names
-are:
+List Of Commands. Case-sensitive -- Type only in uppercase.
 
 | Typed command | Action |
 | --- | --- |
-| `Open` | Opens the gripper |
-| `Close` | Closes the gripper |
-| `Stop` | Stops the gripper |
-| `Help` | Prints command guidance |
+| `OPEN` | Opens the gripper |
+| `CLOSE` | Closes the gripper |
+| `STOP` | Stops the gripper |
+| `HELP` | Prints command guidance |
 
 For normal use, prefer the GUI buttons until the command box is finished.
 
