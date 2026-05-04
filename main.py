@@ -114,7 +114,7 @@ class App(customtkinter.CTk):
         self.boxes2.grid(row=14, column=0, padx=20, pady = 20, sticky = "s")
         self.boxes2.configure(state="normal")
         self.boxes2.tag_config("center", justify="center")
-        self.boxes2.insert("end", "Alpha Build 0.1.0","center")
+        self.boxes2.insert("end", "Alpha Build 0.2.0","center")
         self.boxes2.configure(state="disabled")
 
         #Entry Box Instance
