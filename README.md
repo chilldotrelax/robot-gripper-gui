@@ -40,6 +40,7 @@ List Of Commands. Case-sensitive -- Type only in uppercase.
 - Python 3.9 or newer recommended
 - Arduino
 
+The control panel also requires depenencies to be installed.
 Python packages are listed in [requirements.txt](requirements.txt).
 
 ## Setup
