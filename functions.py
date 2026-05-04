@@ -4,7 +4,11 @@ from datetime import datetime
 import time
 from typography import DIALOG_FONT_SIZE, UI_FONT_FAMILY
 
+
+#Import Serial Controller Class and create instance for use in functions
 boardControls = SerialController()
+
+#Setup Typography
 DIALOG_FONT = (UI_FONT_FAMILY, DIALOG_FONT_SIZE)
 
 #Global Variables
@@ -42,7 +46,7 @@ def modifyState(checkState):
 #Board Ops
 
 def getBaudRate(textbox,reportStatusBox,checkState):
-    getRate = customtkinter.CTkInputDialog(text="Type in your preferred rate", title="Baud Rate", font=DIALOG_FONT)
+    getRate = customtkinter.CTkInputDialog(text="Type in your preferred baud rate. Default should be set to 9600.", title="Baud Rate", font=DIALOG_FONT)
     input_value = getRate.get_input()
     if input_value is not None and input_value.isdigit() == True:
         counter = 0

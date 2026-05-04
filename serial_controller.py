@@ -7,7 +7,6 @@ class SerialController:
 
     def connect(self, port: str, baud_rate: int = 9600):
         self.arduino = serial.Serial(port, baud_rate, timeout=1)
-        print(f"Connection Success. Baud Rate = {baud_rate}")
         time.sleep(2)  # Allows Arduino to reset after connection opens.
 
     def disconnect(self):
@@ -15,7 +14,7 @@ class SerialController:
             self.arduino.close()
 
     def is_connected(self):
-        return self.arduino is not None and self.arduino.is_open #True
+        return self.arduino is not None and self.arduino.is_open 
 
     def send_command(self, command: str):
         if not self.is_connected():
@@ -28,4 +27,6 @@ class SerialController:
             return self.arduino.readline().decode(errors="ignore").strip()
 
         return None
+    
+
 
