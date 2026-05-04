@@ -1,9 +1,15 @@
+# Gripper Control Panel
+
+Robot gripper desktop GUI built with CustomTkinter and PySerial.
+
 ## Current Features
 
 - Open, close, and stop gripper controls
 - Manual serial port selection
 - Manual baud rate selection
 - Connect, disconnect, and connection status controls
+- Output log and connection status display
+- WIP command entry box for typed commands
 
 ## Command Protocol
 
@@ -17,6 +23,20 @@ The GUI sends these commands to the connected board:
 
 Arduino or microcontroller sketch should listen for those characters and
 map them to the matching gripper behavior.
+
+## Command Box
+
+The command entry box is currently work in progress. The planned command names
+are:
+
+| Typed command | Action |
+| --- | --- |
+| `Open` | Opens the gripper |
+| `Close` | Closes the gripper |
+| `Stop` | Stops the gripper |
+| `Help` | Prints command guidance |
+
+For normal use, prefer the GUI buttons until the command box is finished.
 
 ## Requirements
 
@@ -59,6 +79,22 @@ Then use the interface in this order:
 4. Use **Open**, **Close**, or **Stop** to control the gripper.
 5. Click **Disconnect** before unplugging the board or closing the app.
 
+## Portable Zip Build
+
+Some releases are distributed as a portable zip file instead of source code.
+To run the portable build:
+
+1. Download and unzip the release folder.
+2. Open the extracted folder.
+3. Double-click **Gripper Control Panel.exe**.
+
+Do not move, rename, delete, or edit the **_internal** folder. The executable
+depends on files inside that folder, and the app may not start if those files
+are changed.
+
+Run the executable from the extracted folder, not directly from inside the zip
+archive.
+
 ## License
 
 Licensed under the MIT License. See [LICENSE](LICENSE)
@@ -70,9 +106,12 @@ for details.
 .
 ├── main.py                 # CustomTkinter app layout and button wiring
 ├── functions.py            # GUI command handlers and log helpers
+├── commandBoxLogic.py      # WIP typed command routing
 ├── serial_controller.py    # PySerial connection wrapper
+├── typography.py           # Shared font sizing and families
 ├── assets/
 │   └── app_icon.png        # Window icon asset
+├── .gitignore              # Local environment and build artifact ignores
 ├── requirements.txt        # Python package dependencies
 └── README.md
 ```
