@@ -7,6 +7,7 @@ from pathlib import Path
 from serial_controller import SerialController
 from functions import openGripper, closeGripper, stopGripper, connectBoard, disconnectBoard, checkConnection, getBaudRate, getPort,reportStatus
 from datetime import datetime 
+from commandBoxLogic import importVariables
 from typography import (
     BUTTON_FONT_SIZE,
     LOG_FONT_SIZE,
@@ -99,9 +100,10 @@ class App(customtkinter.CTk):
         self.writeBox.grid(row=6, column=0, padx=20, pady=20)
         self.writeBox.configure(state="disabled")
 
+
         #Status Box Instance
         self.boxes = customtkinter.CTkTextbox(self, width=600, height=100, corner_radius=0, font=STATUS_FONT, fg_color="transparent")
-        self.boxes.grid(row=9, column=0, padx=20, pady=20)
+        self.boxes.grid(row=12, column=0, padx=20, pady=20)
         self.boxes.configure(state="normal")
         self.boxes.tag_config("center", justify="center")
         self.boxes.insert("end", "Status: " + reportStatus() + "| Baud Rate: Not Set | Port: Not Set","center")
@@ -114,7 +116,11 @@ class App(customtkinter.CTk):
         self.boxes2.tag_config("center", justify="center")
         self.boxes2.insert("end", "Alpha Build 0.1.0","center")
         self.boxes2.configure(state="disabled")
-    
+
+        #Entry Box Instance
+        self.inputCommand = customtkinter.CTkEntry(self, width=600, height=30, corner_radius=3, font=LOG_FONT,placeholder_text="> Type in a command. (DO NOT FUCK AROUND WITH THIS)")
+        self.inputCommand.grid(row=8, column=0, padx=20, pady=(0,20))
+        self.inputCommand.bind("<Return>",command = lambda e: importVariables(str(self.inputCommand.get()),self.writeBox,self.boxes))
     #App Icon Setup
     def _set_app_icon(self):
         if not APP_ICON_PATH.exists():
