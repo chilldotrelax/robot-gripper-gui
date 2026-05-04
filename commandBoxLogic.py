@@ -2,7 +2,7 @@ from functions import openGripper, closeGripper, stopGripper, connectBoard, disc
 from functions import write_to_box, rate, port
 
 def commandGuides(textboxes):
-    write_to_box(textbox= textboxes, reportStatusBox= None, inputString="This is just a test",rate=rate,port=port)
+    write_to_box(textbox= textboxes, reportStatusBox= None, inputString="\n"+ "Available Commands:" +'\n' + "OPEN - Opens the gripper" +'\n' + "CLOSE - Close the gripper" +'\n'+"STOP - Stop motor" ,rate=rate,port=port)
 
 commandInputs = ""
 writeBoxImports = None
