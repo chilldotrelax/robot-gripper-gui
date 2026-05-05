@@ -77,7 +77,7 @@ def getPort(textbox,reportStatusBox,checkState):
 def connectBoard(textbox,reportStatusBox,enableButtons):
     boardControls.connect(port, rate)  
     time.sleep(1)
-    write_to_box(textbox,reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Successfully Connected!")
+    write_to_box(textbox,reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Successfully Connected!",rate=rate,port=port)
     for value in enableButtons.buttons:
         value.configure(state="normal")
 
