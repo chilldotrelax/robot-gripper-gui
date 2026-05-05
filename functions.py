@@ -81,10 +81,12 @@ def connectBoard(textbox,reportStatusBox,enableButtons):
     for value in enableButtons.buttons:
         value.configure(state="normal")
 
-def disconnectBoard(textbox,reportStatusBox):
+def disconnectBoard(textbox,reportStatusBox,disableButtons):
     boardControls.disconnect()
     time.sleep(1)
     write_to_box(textbox,reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Successfully Disconnected!")
+    for value in disableButtons.buttons:
+        value.configure(state="disabled")
 
 def checkConnection(textbox,reportStatusBox):
     if not boardControls.is_connected():

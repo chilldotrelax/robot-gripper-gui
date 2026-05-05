@@ -84,7 +84,7 @@ class App(customtkinter.CTk):
         )
 
         #Bottom Row Buttons Instance
-        self.button_frame2= buttonFrame(self, values = ["Connect", "Disconnect", "Check Connection"], commandDictionary ={"0" : lambda: connectBoard(self.writeBox,self.boxes,self.button_frame1), "1" : lambda: disconnectBoard(self.writeBox,self.boxes), "2" : lambda: checkConnection(self.writeBox,self.boxes)}, rowValue = 3, title = "Board Controls")
+        self.button_frame2= buttonFrame(self, values = ["Connect", "Disconnect", "Check Connection"], commandDictionary ={"0" : lambda: connectBoard(self.writeBox,self.boxes,self.button_frame1), "1" : lambda: disconnectBoard(self.writeBox,self.boxes,self.button_frame1), "2" : lambda: checkConnection(self.writeBox,self.boxes)}, rowValue = 3, title = "Board Controls")
         self.button_frame2.grid(row = 2, column = 0, padx = 20, pady = 20)
 
         #Selection Buttons Instance

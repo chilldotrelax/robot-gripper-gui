@@ -19,7 +19,9 @@ def importVariables(commandInput,writeBoxImport,statusBoxImport):
     "Open": lambda: openGripper(writeBoxImports,statusBoxImports),
     "Close": lambda : closeGripper(writeBoxImports,statusBoxImports),
     "Stop": lambda: stopGripper(writeBoxImports,statusBoxImports),
-    "Help": lambda: commandGuides(writeBoxImports)
+    "Help": lambda: commandGuides(writeBoxImports),
+    "Connect": lambda: connectBoard(writeBoxImports,statusBoxImports),
+    "Disconnect": lambda: disconnectBoard(writeBoxImports,statusBoxImports)
 }
 
     commandHelper(commandInputs,commandDictionary)
@@ -34,6 +36,9 @@ def commandHelper(commandInput,commandDictionary):
     keysList = commandDictionary.keys()
 
     if commandInput in keysList and commandInput != "Help" and commandInput not in [keysList(i) for i in range(3,len(keysList))]:
+        commandDictionaries[commandInput]()
+    
+    elif commandInput in [keysList(i) for i in range(3,len(keysList))]: 
         commandDictionaries[commandInput]()
 
     elif commandInput == "Help":
