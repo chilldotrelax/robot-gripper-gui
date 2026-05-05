@@ -1,6 +1,6 @@
 # Gripper Control Panel
 
-Controlsthe robot gripper.
+Controls the robot gripper.
 
 ## Command Protocol
 
