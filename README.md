@@ -2,15 +2,6 @@
 
 Helps control the gripper. 
 
-## Current Actions Supported
-
-- Open, close, and stop gripper controls
-- Manual serial port selection
-- Manual baud rate selection (type only 9600 BPS! for correct function.)
-- Connect, disconnect, and connection status controls
-- Output log and connection status display
-- Command Box (Incomplete, do not use or risk crashing!)
-
 ## Command Protocol
 
 The GUI sends these commands to the connected board:
@@ -25,15 +16,7 @@ The arduino opens a serial connection and listens for these characters.
 
 ## Command Box
 
-List Of Commands. Case-sensitive -- Type only in uppercase.
-
-| Command | Action |
-| --- | --- |
-| `OPEN` | Opens the gripper |
-| `CLOSE` | Closes the gripper |
-| `STOP` | Stops the gripper |
-| `HELP` | Prints command guidance |
-
+Incomplete. DO not type in anything, as it can risk the program crashing.
 
 ## Requirements
 
@@ -76,22 +59,6 @@ Then use the interface in this order:
 3. Click **Connect**.
 4. Use **Open**, **Close**, or **Stop** to control the gripper.
 5. Click **Disconnect** before unplugging the board or closing the app.
-
-## Portable Zip Build
-
-It is possible that some releases are distributed as a portable zip file instead of source code.
-To run the portable build:
-
-1. Download and unzip the release folder.
-2. Open the extracted folder.
-3. Double-click **Gripper Control Panel.exe**.
-
-Do not move, rename, delete, or edit the **_internal** folder. The executable
-depends on files inside that folder, and the app may not start if those files
-are changed.
-
-Run the executable from the extracted folder, not directly from inside the zip
-archive.
 
 ## License
 
