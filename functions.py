@@ -4,6 +4,7 @@ from datetime import datetime
 import time
 from typography import DIALOG_FONT_SIZE, UI_FONT_FAMILY
 
+timeNow = datetime.now().strftime('%H:%M:%S')
 
 #Import Serial Controller Class and create instance for use in functions
 boardControls = SerialController()
@@ -24,7 +25,8 @@ def reportStatus():
 
 def write_to_box(textbox, reportStatusBox, inputString,rate,port):
     textbox.configure(state="normal")
-    textbox.insert("end", inputString + "\n")
+    message = inputString.strip()
+    textbox.insert("end", f"\n[{timeNow}] {message}\n")
     textbox.configure(state="disabled")
     if reportStatusBox is not None and rate is not None or port is not None:
         reportStatusBox.configure(state="normal")
@@ -55,10 +57,10 @@ def getBaudRate(textbox,reportStatusBox,checkState):
         time.sleep(1)
         counter += 1
         counterFunction(counter,checkState)
-        write_to_box(textbox, reportStatusBox, f"[{datetime.now().strftime('%H:%M:%S')}] Baud Rate set to {rate}.",rate=rate,port=port)
+        write_to_box(textbox, reportStatusBox, f"Baud Rate set to {rate}.",rate=rate,port=port)
     elif input_value.isdigit() == False:
         time.sleep(0.2)
-        write_to_box(textbox,reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Invalid Entry, please try again.")
+        write_to_box(textbox,reportStatusBox, f"Invalid Entry, please try again.",rate=rate,port=port)
     else:
         time.sleep(0.2)
 
@@ -72,53 +74,66 @@ def getPort(textbox,reportStatusBox,checkState):
         time.sleep(1)
         counter += 1
         counterFunction(counter,checkState)
-        write_to_box(textbox,reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Port set to {port}.",rate=rate,port=port)
+        write_to_box(textbox,reportStatusBox, f"Port set to {port}.",rate=rate,port=port)
 
 def connectBoard(textbox,reportStatusBox,enableButtons):
     boardControls.connect(port, rate)  
     time.sleep(1)
-    write_to_box(textbox,reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Successfully Connected!",rate=rate,port=port)
+    write_to_box(textbox,reportStatusBox, f"Successfully Connected.",rate=rate,port=port)
     for value in enableButtons.buttons:
         value.configure(state="normal")
 
 def disconnectBoard(textbox,reportStatusBox,disableButtons):
     boardControls.disconnect()
     time.sleep(1)
-    write_to_box(textbox,reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Successfully Disconnected!")
+    write_to_box(textbox,reportStatusBox, f"Successfully Disconnected.",rate=rate,port=port)
     for value in disableButtons.buttons:
         value.configure(state="disabled")
 
 def checkConnection(textbox,reportStatusBox):
     if not boardControls.is_connected():
-        write_to_box(textbox,reportStatusBox,f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Not connected",rate=rate,port=port)
+        write_to_box(textbox,reportStatusBox,f"Not connected.",rate=rate,port=port)
     else:
-        write_to_box(textbox,reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Connected!",rate=rate,port=port)
+        write_to_box(textbox,reportStatusBox, f"Connected.",rate=rate,port=port)
 
 #Motor Operations
 def openGripper(textbox,reportStatusBox):
     if not boardControls.is_connected():
         time.sleep(1)
 
-        write_to_box(textbox, reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Not connected, please connect to a board first!",rate=rate,port=port)
+        write_to_box(textbox, reportStatusBox, f"Not connected, please connect to a board first.",rate=rate,port=port)
     else:
         boardControls.send_command("o")
-        time.sleep(1)
-        write_to_box(textbox, reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Opening Gripper, please wait!",rate=rate,port=port)
+        write_to_box(textbox, reportStatusBox, f"Opening Gripper, please wait 6 seconds. Do not press any other buttons.",rate=rate,port=port)
 
 def closeGripper(textbox,reportStatusBox):
     if not boardControls.is_connected():
         time.sleep(1)
-        write_to_box(textbox,reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Not connected, please connect to a board first!",rate=rate,port=port)
+        write_to_box(textbox,reportStatusBox, f"Not connected, please connect to a board first!",rate=rate,port=port)
     else:
         boardControls.send_command("c")
         time.sleep(1)
-        write_to_box(textbox, reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Closing Gripper, please wait!",rate=rate,port=port)
+        write_to_box(textbox, reportStatusBox, f"Closing Gripper, please wait!",rate=rate,port=port)
 
 def stopGripper(textbox,reportStatusBox):
     if not boardControls.is_connected():
         time.sleep(1)
-        write_to_box(textbox, reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Not connected, please connect to a board first!",rate=rate,port=port)
+        write_to_box(textbox, reportStatusBox, f"Not connected, please connect to a board first!",rate=rate,port=port)
     else:
         boardControls.send_command("s")
         time.sleep(1)
-        write_to_box(textbox, reportStatusBox, f"{"["+datetime.now().strftime("%H:%M:%S")+"]"} Stopping Gripper, please wait!",rate=rate,port=port)
+        write_to_box(textbox, reportStatusBox, f"Stopping Gripper, please wait!",rate=rate,port=port)
+
+def jogMotor(keyWord,textbox,reportStatusBox):
+    if not boardControls.is_connected():
+        time.sleep (0.2)
+        write_to_box(textbox, reportStatusBox, f"Not connected, please connect to a board first!",rate=rate,port=port)
+    
+    if keyWord.split()[1] == "FORWARD":
+        boardControls.send_command("JOG FORWARD")
+        time.sleep(0.5) #Give time for serial to accept second input
+        boardControls.send_command(int(keyWord.split()[2]))
+    elif keyWord.split()[1] == "REVERSE":
+        boardControls.send_command("JOG REVERSE")
+        time.sleep(0.5) #Give time for serial to accept second input
+        boardControls.send_command(int(keyWord.split()[2]))
