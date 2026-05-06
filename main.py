@@ -118,7 +118,7 @@ class App(customtkinter.CTk):
         self.boxes2.insert("end", "Alpha Build 0.2.0","center")
         self.boxes2.configure(state="disabled")
 
-        #Entry Box Instance
+        #Entry Box Instance 
         self.inputCommand = customtkinter.CTkEntry(self, width=600, height=30, corner_radius=3, font=LOG_FONT,placeholder_text="> Type in a command. (DO NOT MESS AROUND WITH THIS)")
         self.inputCommand.grid(row=8, column=0, padx=20, pady=(0,20))
         self.inputCommand.bind("<Return>",command = lambda e: importVariables(str(self.inputCommand.get()),self.writeBox,self.boxes))

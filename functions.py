@@ -128,12 +128,12 @@ def jogMotor(keyWord,textbox,reportStatusBox):
     if not boardControls.is_connected():
         time.sleep (0.2)
         write_to_box(textbox, reportStatusBox, f"Not connected, please connect to a board first!",rate=rate,port=port)
-    
-    if keyWord.split()[1] == "FORWARD":
-        boardControls.send_command("JOG FORWARD")
-        time.sleep(0.5) #Give time for serial to accept second input
-        boardControls.send_command(int(keyWord.split()[2]))
-    elif keyWord.split()[1] == "REVERSE":
-        boardControls.send_command("JOG REVERSE")
-        time.sleep(0.5) #Give time for serial to accept second input
-        boardControls.send_command(int(keyWord.split()[2]))
+    else:
+        if keyWord.split()[1] == "FORWARDS":
+            boardControls.send_command("JOG FORWARDS")
+            time.sleep(0.5) #Give time for serial to accept second input
+            boardControls.send_command(int(keyWord.split()[2]))
+        elif keyWord.split()[1] == "REVERSE":
+            boardControls.send_command("JOG REVERSE")
+            time.sleep(0.5) #Give time for serial to accept second input
+            boardControls.send_command(int(keyWord.split()[2]))

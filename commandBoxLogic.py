@@ -14,18 +14,13 @@ statusBoxImports = None
 def importVariables(commandInput,writeBoxImport,statusBoxImport):
     commandInputs = commandInput
 
-    for i in commandInputs.split():
-        if i.isdigit == True:
-            steps = commandInputs.split()[2]
-            commandHelper(commandInputs, commandDictionary)
-        else:
-            break
-
-
     writeBoxImports = writeBoxImport
     statusBoxImports = statusBoxImport
+    steps = 0
+    if len(commandInputs.split()) == 2 and str([i for i in commandInputs.split()][2]).isdigit() == True:
+        newSteps = int(commandInputs.split()[2])
+        steps = newSteps
 
-    print(commandInputs,writeBoxImports,statusBoxImports)
 
     commandDictionary = {
     "OPEN": lambda: openGripper(writeBoxImports,statusBoxImports),
@@ -38,8 +33,7 @@ def importVariables(commandInput,writeBoxImport,statusBoxImport):
     "JOG REVERSE": lambda: jogMotor(steps,writeBoxImports,statusBoxImports),
     "UNKNOWN COMMAND": lambda: unknownCommand(writeBoxImports)
 }
-
-    commandHelper(commandInputs,commandDictionary)
+    commandHelper(commandInputs, commandDictionary)
 
     commandInputs = ""
     writeBoxImports = None
@@ -49,7 +43,7 @@ def commandHelper(commandInput,commandDictionary):
     commandDictionaries = commandDictionary
     
     keysList= [i for i in commandDictionary.keys()]
-    
+
     #Open, close,stop
     if commandInput in keysList and commandInput != "Help" and commandInput not in [keysList[i] for i in range(3,6)]:
         commandDictionaries[commandInput.strip]()
@@ -58,7 +52,8 @@ def commandHelper(commandInput,commandDictionary):
     elif commandInput in [keysList[i] for i in range(3,6)]: 
         commandDictionaries[commandInput]()
 
-    elif commandInput in [keysList[i] for i in range(6,len(keysList))]:
+    #REVERSE FORWARD
+    elif " ".join(commandInput.split()[:2]) in [keysList[i] for i in range(6,len(keysList))]:
         ammendInput =  " ".join(commandInput.split()[:2])
         commandDictionaries[ammendInput]()
 
