@@ -6,24 +6,37 @@ Controls the robot gripper.
 
 The GUI sends these commands to the connected board:
 
-| GUI action | Serial command |
+| GUI Action | Serial Command |
 | --- | --- |
 | Open | `o` |
 | Close | `c` |
 | Stop | `s` |
+| Jog Forwards | `JOG FORWARD`, then the step count |
+| Jog Reverse | `JOG REVERSE`, then the step count |
 
-The arduino opens a serial connection and listens for these characters. 
+The Arduino opens a serial connection and listens for these commands.
 
 ## Command Box
 
-Incomplete. DO not type in anything, as it can risk the program crashing.
+The command box accepts these uppercase commands:
+
+| Command | Description |
+| --- | --- |
+| `OPEN` | Opens the gripper. |
+| `CLOSE` | Closes the gripper. |
+| `STOP` | Stops the motor. |
+| `HELP` | Shows the available commands. |
+| `CONNECT` | Connects to the selected board. |
+| `DISCONNECT` | Disconnects from the board. |
+| `JOG FORWARDS <VALUE>` | Jogs the motor forward by the given number of steps. |
+| `JOG REVERSE <VALUE>` | Jogs the motor backward by the given number of steps. |
 
 ## Requirements
 
 - Python 3.9 or newer recommended
 - Arduino
 
-The control panel also requires depenencies to be installed.
+The control panel also requires dependencies to be installed.
 Python packages are listed in [requirements.txt](requirements.txt).
 
 ## Setup
