@@ -2,6 +2,8 @@
 
 Controls the robot gripper.
 
+This project has now been concluded and this github repo has been archrived. 
+
 ## Command Protocol
 
 The GUI sends these commands to the connected board:
