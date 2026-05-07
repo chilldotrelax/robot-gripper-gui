@@ -2,7 +2,7 @@
 
 Controls the robot gripper.
 
-This project has now been concluded and this github repo has been archrived. 
+This project has now concluded and this github repo has been archrived. 
 
 ## Command Protocol
 
