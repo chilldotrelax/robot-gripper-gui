@@ -26,7 +26,7 @@ def reportStatus():
 def write_to_box(textbox, reportStatusBox, inputString,rate,port):
     textbox.configure(state="normal")
     message = inputString.strip()
-    textbox.insert("end", f"\n[{timeNow}] {message}\n")
+    textbox.insert("end", f"[{timeNow}] {message}\n")
     textbox.configure(state="disabled")
     if reportStatusBox is not None and rate is not None or port is not None:
         reportStatusBox.configure(state="normal")
@@ -109,31 +109,34 @@ def openGripper(textbox,reportStatusBox):
 def closeGripper(textbox,reportStatusBox):
     if not boardControls.is_connected():
         time.sleep(1)
-        write_to_box(textbox,reportStatusBox, f"Not connected, please connect to a board first!",rate=rate,port=port)
+        write_to_box(textbox,reportStatusBox, f"Not connected, please connect to a board first.",rate=rate,port=port)
     else:
         boardControls.send_command("c")
         time.sleep(1)
-        write_to_box(textbox, reportStatusBox, f"Closing Gripper, please wait!",rate=rate,port=port)
+        write_to_box(textbox, reportStatusBox, f"Closing Gripper, please wait.",rate=rate,port=port)
 
 def stopGripper(textbox,reportStatusBox):
     if not boardControls.is_connected():
         time.sleep(1)
-        write_to_box(textbox, reportStatusBox, f"Not connected, please connect to a board first!",rate=rate,port=port)
+        write_to_box(textbox, reportStatusBox, f"Not connected, please connect to a board first.",rate=rate,port=port)
     else:
         boardControls.send_command("s")
         time.sleep(1)
-        write_to_box(textbox, reportStatusBox, f"Stopping Gripper, please wait!",rate=rate,port=port)
+        write_to_box(textbox, reportStatusBox, f"Stopping Gripper, please wait.",rate=rate,port=port)
 
-def jogMotor(keyWord,textbox,reportStatusBox):
+def jogMotor(steps,commandInput,textbox,reportStatusBox):
     if not boardControls.is_connected():
         time.sleep (0.2)
-        write_to_box(textbox, reportStatusBox, f"Not connected, please connect to a board first!",rate=rate,port=port)
+        write_to_box(textbox, reportStatusBox, f"Not connected, please connect to a board first.",rate=rate,port=port)
     else:
-        if keyWord.split()[1] == "FORWARDS":
-            boardControls.send_command("JOG FORWARDS")
-            time.sleep(0.5) #Give time for serial to accept second input
-            boardControls.send_command(int(keyWord.split()[2]))
-        elif keyWord.split()[1] == "REVERSE":
-            boardControls.send_command("JOG REVERSE")
-            time.sleep(0.5) #Give time for serial to accept second input
-            boardControls.send_command(int(keyWord.split()[2]))
+        if commandInput.split()[1] == "FORWARDS":
+            boardControls.send_command("f")
+            time.sleep(0.2) #Give time for serial to accept second input
+            print(f"{steps} = STEPS")
+            boardControls.send_command(str(steps))
+            write_to_box(textbox, reportStatusBox, f"Opening Gripper.",rate=rate,port=port)
+        elif commandInput.split()[1] == "REVERSE":
+            boardControls.send_command("b")
+            time.sleep(0.2) #Give time for serial to accept second input
+            boardControls.send_command(str(steps))
+            write_to_box(textbox, reportStatusBox, f"Closing Gripper.",rate=rate,port=port)

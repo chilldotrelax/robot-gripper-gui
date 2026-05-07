@@ -11,15 +11,22 @@ commandInputs = ""
 writeBoxImports = None
 statusBoxImports = None
 
+steps  = 0
+
 def importVariables(commandInput,writeBoxImport,statusBoxImport):
     commandInputs = commandInput
 
     writeBoxImports = writeBoxImport
     statusBoxImports = statusBoxImport
-    steps = 0
-    if len(commandInputs.split()) == 2 and str([i for i in commandInputs.split()][2]).isdigit() == True:
-        newSteps = int(commandInputs.split()[2])
-        steps = newSteps
+
+    def modify_global(commandInputs):
+        global steps
+        steps = int(commandInputs.split()[2])
+
+
+    if len(commandInputs.split()) == 3 and str([i for i in commandInputs.split()][2]).isdigit() == True:
+        modify_global(commandInput)
+
 
 
     commandDictionary = {
@@ -29,8 +36,8 @@ def importVariables(commandInput,writeBoxImport,statusBoxImport):
     "HELP": lambda: commandGuides(writeBoxImports),
     "CONNECT": lambda: connectBoard(writeBoxImports,statusBoxImports),
     "DISCONNECT": lambda: disconnectBoard(writeBoxImports,statusBoxImports),
-    "JOG FORWARDS": lambda: jogMotor(steps,writeBoxImports,statusBoxImports),
-    "JOG REVERSE": lambda: jogMotor(steps,writeBoxImports,statusBoxImports),
+    "JOG FORWARDS": lambda: jogMotor(steps,commandInputs,writeBoxImports,statusBoxImports),
+    "JOG REVERSE": lambda: jogMotor(steps,commandInputs,writeBoxImports,statusBoxImports),
     "UNKNOWN COMMAND": lambda: unknownCommand(writeBoxImports)
 }
     commandHelper(commandInputs, commandDictionary)
@@ -46,13 +53,13 @@ def commandHelper(commandInput,commandDictionary):
 
     #Open, close,stop
     if commandInput in keysList and commandInput != "Help" and commandInput not in [keysList[i] for i in range(3,6)]:
-        commandDictionaries[commandInput.strip]()
+        commandDictionaries[commandInput]()
     
     #Connect, Disconnect
     elif commandInput in [keysList[i] for i in range(3,6)]: 
         commandDictionaries[commandInput]()
 
-    #REVERSE FORWARD
+    #REVERSE, FORWARD
     elif " ".join(commandInput.split()[:2]) in [keysList[i] for i in range(6,len(keysList))]:
         ammendInput =  " ".join(commandInput.split()[:2])
         commandDictionaries[ammendInput]()
