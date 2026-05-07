@@ -20,9 +20,8 @@ class SerialController:
         if not self.is_connected():
             raise ConnectionError("Arduino is not connected.")
         if not command.isdigit():
-            self.arduino.write(command.encode("utf-8")) #Encode 
+            self.arduino.write(command.encode("utf-8"))
         elif command.isdigit():
-            data = str(command)
             self.arduino.write(command.encode("utf-8"))
 
         
@@ -30,7 +29,6 @@ class SerialController:
     def read_line(self):
         if self.is_connected() and self.arduino.in_waiting > 0:
             return self.arduino.readline().decode(errors="ignore").strip()
-
         return None
     
 
